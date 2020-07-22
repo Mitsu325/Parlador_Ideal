@@ -5,12 +5,13 @@ import User from '../model/User';
 import AppError from '../errors/AppError';
 
 interface Request {
+  id: string;
   text: string;
   user_id: string;
 }
 
-class CreatePostService {
-  public async execute({ text, user_id }: Request): Promise<Post> {
+class UpdatePostService {
+  public async execute({ id, text, user_id }: Request): Promise<Post> {
     const postsRepository = getRepository(Post);
     const usersRepository = getRepository(User);
 
@@ -20,14 +21,17 @@ class CreatePostService {
       throw new AppError('Only authenticated users can post.', 401);
     }
 
+    const post = await postsRepository.findOne({ where: { id } });
+
+    if (!post) {
+      throw new AppError('There is no post.');
+    }
+
     if (!text.trim() || text.length > 280) {
       throw new AppError('Text invalid.');
     }
 
-    const post = postsRepository.create({
-      text,
-      user_id,
-    });
+    post.text = text;
 
     await postsRepository.save(post);
 
@@ -35,4 +39,4 @@ class CreatePostService {
   }
 }
 
-export default CreatePostService;
+export default UpdatePostService;
