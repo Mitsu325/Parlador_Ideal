@@ -4,6 +4,7 @@ import { getRepository } from 'typeorm';
 import Post from '../model/Post';
 import CreatePostService from '../services/CreatePostService';
 import UpdatePostService from '../services/UpdatePostService';
+import DeletePostService from '../services/DeletePostService';
 
 const postsRouter = Router();
 
@@ -40,6 +41,16 @@ postsRouter.patch('/:id', async (req, res) => {
   });
 
   return res.json(post);
+});
+
+postsRouter.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const deletePost = new DeletePostService();
+
+  await deletePost.execute(id);
+
+  return res.status(204).send();
 });
 
 export default postsRouter;

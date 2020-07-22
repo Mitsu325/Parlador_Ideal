@@ -21,10 +21,10 @@ class UpdatePostService {
       throw new AppError('Only authenticated users can post.', 401);
     }
 
-    const post = await postsRepository.findOne({ where: { id } });
+    const post = await postsRepository.findOne(id);
 
     if (!post) {
-      throw new AppError('There is no post.');
+      throw new AppError('Post does not exist.');
     }
 
     if (!text.trim() || text.length > 280) {
