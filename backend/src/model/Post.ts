@@ -22,7 +22,7 @@ class Post {
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
-  category: User;
+  user: User;
 
   @CreateDateColumn()
   created_at: Date;
