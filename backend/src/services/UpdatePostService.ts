@@ -15,13 +15,13 @@ class UpdatePostService {
     const postsRepository = getRepository(Post);
     const usersRepository = getRepository(User);
 
-    const user = await usersRepository.findOne(user_id);
+    const user = await usersRepository.findOne({ where: { id: user_id } });
 
     if (!user) {
       throw new AppError('Only authenticated users can change avatar.', 401);
     }
 
-    const post = await postsRepository.findOne(id);
+    const post = await postsRepository.findOne({ where: { id } });
 
     if (!post) {
       throw new AppError('Post does not exist.');
