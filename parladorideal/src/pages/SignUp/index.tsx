@@ -132,7 +132,7 @@ const SignUp: React.FC = () => {
                 onSubmitEditing={() => formRef.current?.submitForm()}
               />
 
-              <Button onPress={() => formRef.current?.submitForm()}>
+              <Button primary onPress={() => formRef.current?.submitForm()}>
                 Cadastrar
               </Button>
             </Form>

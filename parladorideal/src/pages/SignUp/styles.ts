@@ -3,7 +3,6 @@ import { Platform } from 'react-native';
 
 export const Container = styled.View`
   flex: 1;
-  /* background-color: #f26763; */
   padding: 0 30px ${Platform.OS === 'android' ? 150 : 40}px;
   align-items: center;
   justify-content: center;
@@ -17,7 +16,6 @@ export const Title = styled.Text`
 `;
 
 export const BackToSignIn = styled.TouchableOpacity`
-  /* background-color: #f26763; */
   position: absolute;
   left: 0;
   bottom: 0;
