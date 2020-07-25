@@ -6,6 +6,7 @@ interface ButtonProps {
 }
 
 export const Container = styled(RectButton)<ButtonProps>`
+  width: 100%
   height: 60px;
   background: ${props => (props.primary ? '#fff' : '#f26763')};
   border-radius: 8px;
