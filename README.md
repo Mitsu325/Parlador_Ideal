@@ -58,7 +58,7 @@ O projeto foi desenvolvido com as stacks:
 <a id="design"></a>
 ## 🎨 Design
 
-- O wireframe está dinponível no **[Figma](https://www.figma.com/proto/Lx7mDvaC9BzQrOs3kxIWR4/Parlador-Ideal?node-id=1%3A6&viewport=116%2C197%2C0.2803868055343628&scaling=scale-down)** contendo as telas:
+- O wireframe está dinponível no **[Figma](https://www.figma.com/proto/Lx7mDvaC9BzQrOs3kxIWR4/Parlador-Ideal?node-id=1%3A2&viewport=116%2C197%2C0.2803868055343628&scaling=scale-down)** contendo as telas:
    - Splash Screren
    - Login
    - Cadastro
