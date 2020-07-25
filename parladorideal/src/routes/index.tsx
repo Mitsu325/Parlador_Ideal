@@ -1,29 +1,23 @@
 import React from 'react';
+import { ActivityIndicator, View } from 'react-native';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import AuthRoutes from './auth.routes';
+import AppRoutes from './app.routes';
 
-// import SplashScreen from '../pages/SplashScreen';
-import SignIn from '../pages/SignIn';
-import SignUp from '../pages/SignUp';
-import Feed from '../pages/Feed';
-import MyPosts from '../pages/MyPosts';
-import Post from '../pages/Post';
+import { useAuth } from '../hooks/auth';
 
-const Auth = createStackNavigator();
+const Routes: React.FC = () => {
+  const { user, loading } = useAuth();
 
-const AuthRoutes: React.FC = () => (
-  <Auth.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-  >
-    {/* <Auth.Screen name="SplashScreen" component={SplashScreen} /> */}
-    <Auth.Screen name="SignIn" component={SignIn} />
-    <Auth.Screen name="SignUp" component={SignUp} />
-    <Auth.Screen name="Feed" component={Feed} />
-    <Auth.Screen name="MyPosts" component={MyPosts} />
-    <Auth.Screen name="Post" component={Post} />
-  </Auth.Navigator>
-);
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#e51a13" />
+      </View>
+    );
+  }
 
-export default AuthRoutes;
+  return user ? <AppRoutes /> : <AuthRoutes />;
+};
+
+export default Routes;
