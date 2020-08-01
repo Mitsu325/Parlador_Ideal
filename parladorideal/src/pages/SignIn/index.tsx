@@ -10,8 +10,6 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
-
-import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 
 import { useAuth } from '../../hooks/auth';
@@ -26,6 +24,7 @@ import logoImg from '../../assets/logo.png';
 import {
   Container,
   Title,
+  Form,
   ForgotPassword,
   ForgotPasswordText,
   CreateAccountButton,

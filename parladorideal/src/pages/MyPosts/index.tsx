@@ -3,8 +3,10 @@ import { Image, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 
-import logoImg from '../../assets/logoH.png';
+// import logoImg from '../../assets/logoH.png';
 import ideaImg from '../../assets/myIdea.png';
+
+import { useAuth } from '../../hooks/auth';
 
 import {
   Container,
@@ -20,14 +22,20 @@ import {
 
 const MyPosts: React.FC = () => {
   const navigation = useNavigation();
+  const { signOut } = useAuth();
 
   return (
     <Container>
       <Header>
-        <Image source={logoImg} />
+        {/* <Image source={logoImg} /> */}
         <GoToMyPosts onPress={() => navigation.navigate('Feed')}>
           <Icon name="arrow-left" size={20} color="#A9A9A9" />
           <GoToMyPostsText>Voltar</GoToMyPostsText>
+        </GoToMyPosts>
+
+        <GoToMyPosts onPress={signOut}>
+          <GoToMyPostsText>Sair</GoToMyPostsText>
+          <Icon name="log-out" size={20} color="#A9A9A9" />
         </GoToMyPosts>
       </Header>
 

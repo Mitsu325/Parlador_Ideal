@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
-import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
@@ -23,7 +22,13 @@ import Button from '../../components/Button';
 
 import logoImg from '../../assets/logo.png';
 
-import { Container, Title, BackToSignIn, BackToSignInText } from './styles';
+import {
+  Container,
+  Title,
+  Form,
+  BackToSignIn,
+  BackToSignInText,
+} from './styles';
 
 interface SignUpFormData {
   name: string;
