@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
@@ -37,19 +37,30 @@ const MyPosts: React.FC = () => {
   const { signOut } = useAuth();
 
   useEffect(() => {
-    async function loadPosts(): Promise<void> {
-      const response = await api.get('users');
+    const unsubscribe = navigation.addListener('focus', () => {
+      async function loadPosts(): Promise<void> {
+        const response = await api.get('users');
 
-      const postsFormatted = response.data.map((post: Post) => ({
-        ...post,
-        formattedDate: new Date(post.updated_at).toLocaleDateString('pt-br'),
-      }));
+        const postsFormatted = response.data.map((post: Post) => ({
+          ...post,
+          formattedDate: new Date(post.updated_at).toLocaleDateString('pt-br'),
+        }));
 
-      setPosts(postsFormatted);
-    }
+        setPosts(postsFormatted);
+      }
 
-    loadPosts();
-  }, []);
+      loadPosts();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  const navigateToDeletePost = useCallback(
+    (postId: string) => {
+      navigation.navigate('DeletePost', { postId });
+    },
+    [navigation],
+  );
 
   return (
     <Container>
@@ -76,7 +87,12 @@ const MyPosts: React.FC = () => {
         renderItem={({ item }) => (
           <CardPost>
             <CardHeader>
-              <Icon name="trash" size={24} color="#a9a9a9" />
+              <Icon
+                name="trash"
+                size={24}
+                color="#a9a9a9"
+                onPress={() => navigateToDeletePost(item.id)}
+              />
               <Icon name="edit" size={24} color="#f26763" />
             </CardHeader>
             <Data>{item.formattedDate}</Data>
