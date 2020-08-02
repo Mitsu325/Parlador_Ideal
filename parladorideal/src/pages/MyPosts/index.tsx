@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 
@@ -8,21 +8,48 @@ import ideaImg from '../../assets/myIdea.png';
 
 import { useAuth } from '../../hooks/auth';
 
+import api from '../../services/api';
+
 import {
   Container,
   Header,
   GoToMyPosts,
   GoToMyPostsText,
   Title,
+  PostsList,
   CardPost,
   CardHeader,
   Data,
   CardText,
 } from './styles';
 
+export interface Post {
+  id: string;
+  text: string;
+  updated_at: string;
+  formattedDate: string;
+}
+
 const MyPosts: React.FC = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+
   const navigation = useNavigation();
   const { signOut } = useAuth();
+
+  useEffect(() => {
+    async function loadPosts(): Promise<void> {
+      const response = await api.get('users');
+
+      const postsFormatted = response.data.map((post: Post) => ({
+        ...post,
+        formattedDate: new Date(post.updated_at).toLocaleDateString('pt-br'),
+      }));
+
+      setPosts(postsFormatted);
+    }
+
+    loadPosts();
+  }, []);
 
   return (
     <Container>
@@ -43,43 +70,20 @@ const MyPosts: React.FC = () => {
 
       <Title>Minhas ideias</Title>
 
-      <ScrollView>
-        <CardPost>
-          <CardHeader>
-            <Icon name="trash" size={24} color="#a9a9a9" />
-            <Icon name="edit" size={24} color="#f26763" />
-          </CardHeader>
-          <Data>23 jul 2020</Data>
-          <CardText>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </CardText>
-        </CardPost>
-
-        <CardPost>
-          <CardHeader>
-            <Icon name="trash" size={24} color="#a9a9a9" />
-            <Icon name="edit" size={24} color="#f26763" />
-          </CardHeader>
-          <Data>23 jul 2020</Data>
-          <CardText>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </CardText>
-        </CardPost>
-
-        <CardPost>
-          <CardHeader>
-            <Icon name="trash" size={24} color="#a9a9a9" />
-            <Icon name="edit" size={24} color="#f26763" />
-          </CardHeader>
-          <Data>23 jul 2020</Data>
-          <CardText>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </CardText>
-        </CardPost>
-      </ScrollView>
+      <PostsList
+        data={posts}
+        keyExtractor={post => post.id}
+        renderItem={({ item }) => (
+          <CardPost>
+            <CardHeader>
+              <Icon name="trash" size={24} color="#a9a9a9" />
+              <Icon name="edit" size={24} color="#f26763" />
+            </CardHeader>
+            <Data>{item.formattedDate}</Data>
+            <CardText>{item.text}</CardText>
+          </CardPost>
+        )}
+      />
     </Container>
   );
 };

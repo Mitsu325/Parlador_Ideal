@@ -1,4 +1,6 @@
 import styled from 'styled-components/native';
+import { FlatList } from 'react-native';
+import { Post } from './index';
 
 export const Container = styled.View`
   flex: 1;
@@ -33,6 +35,10 @@ export const Title = styled.Text`
   margin: 24px 0px;
 `;
 
+export const PostsList = styled(FlatList as new () => FlatList<Post>)`
+  width: 100%;
+`;
+
 export const CardPost = styled.View`
   background: #ffffff;
   border-width: 2px;
@@ -48,20 +54,15 @@ export const CardHeader = styled.View`
   margin-bottom: 20px;
 `;
 
-export const Nome = styled.Text`
-  font-size: 16px;
-  color: #474a51;
-  font-family: 'Mulish-Bold';
-`;
-
 export const Data = styled.Text`
   font-size: 16px;
   color: #a9a9a9;
   font-family: 'Mulish-Bold';
+  margin-bottom: 4px;
 `;
 
 export const CardText = styled.Text`
   font-size: 18px;
   color: #474a51;
-  font-family: 'Mulish-Bold';
+  font-family: 'Mulish-Medium';
 `;
