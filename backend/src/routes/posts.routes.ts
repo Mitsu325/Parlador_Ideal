@@ -14,7 +14,7 @@ postsRouter.use(ensureAuthenticated);
 postsRouter.get('/', async (req, res) => {
   const postsRepository = getRepository(Post);
   const posts = await postsRepository.find({
-    select: ['text', 'updated_at'],
+    select: ['id', 'text', 'updated_at'],
     relations: ['user'],
   });
 
