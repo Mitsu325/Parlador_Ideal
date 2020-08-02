@@ -3,7 +3,6 @@ import { Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 
-// import logoImg from '../../assets/logoH.png';
 import ideaImg from '../../assets/myIdea.png';
 
 import { useAuth } from '../../hooks/auth';
@@ -62,10 +61,16 @@ const MyPosts: React.FC = () => {
     [navigation],
   );
 
+  const navigateToEditPost = useCallback(
+    (postId: string, text: string) => {
+      navigation.navigate('EditPost', { postId, text });
+    },
+    [navigation],
+  );
+
   return (
     <Container>
       <Header>
-        {/* <Image source={logoImg} /> */}
         <GoToMyPosts onPress={() => navigation.navigate('Feed')}>
           <Icon name="arrow-left" size={20} color="#A9A9A9" />
           <GoToMyPostsText>Voltar</GoToMyPostsText>
@@ -93,7 +98,12 @@ const MyPosts: React.FC = () => {
                 color="#a9a9a9"
                 onPress={() => navigateToDeletePost(item.id)}
               />
-              <Icon name="edit" size={24} color="#f26763" />
+              <Icon
+                name="edit"
+                size={24}
+                color="#f26763"
+                onPress={() => navigateToEditPost(item.id, item.text)}
+              />
             </CardHeader>
             <Data>{item.formattedDate}</Data>
             <CardText>{item.text}</CardText>

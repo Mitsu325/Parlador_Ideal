@@ -6,6 +6,7 @@ import Feed from '../pages/Feed';
 import Post from '../pages/Post';
 import MyPosts from '../pages/MyPosts';
 import DeletePost from '../pages/DeletePost';
+import EditPost from '../pages/EditPost';
 
 const App = createStackNavigator();
 
@@ -20,6 +21,7 @@ const AppRoutes: React.FC = () => (
     <App.Screen name="Post" component={Post} />
     <App.Screen name="MyPosts" component={MyPosts} />
     <App.Screen name="DeletePost" component={DeletePost} />
+    <App.Screen name="EditPost" component={EditPost} />
   </App.Navigator>
 );
 
