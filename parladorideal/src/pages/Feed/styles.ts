@@ -1,4 +1,6 @@
 import styled from 'styled-components/native';
+import { FlatList } from 'react-native';
+import { Post } from './index';
 
 export const Container = styled.View`
   flex: 1;
@@ -10,7 +12,7 @@ export const Header = styled.View`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 `;
 
 export const GoToMyPosts = styled.TouchableOpacity`
@@ -30,14 +32,15 @@ export const Title = styled.Text`
   font-size: 24px;
   color: #474a51;
   font-family: 'Rowdies-Regular';
-  margin: 24px 0px;
+  margin-bottom: 8px;
 `;
 
 export const SubTitle = styled.Text`
   font-size: 20px;
+  text-align: center;
   color: #a9a9a9;
   font-family: 'Mulish-Bold';
-  margin-bottom: 8px;
+  margin: 8px 0px;
 `;
 
 export const GoToPost = styled.TouchableOpacity`
@@ -55,6 +58,10 @@ export const GoToPostText = styled.Text`
   font-size: 18px;
   color: #fff;
   font-family: 'Mulish-Bold';
+`;
+
+export const PostsList = styled(FlatList as new () => FlatList<Post>)`
+  width: 100%;
 `;
 
 export const CardPost = styled.View`
@@ -87,5 +94,5 @@ export const Data = styled.Text`
 export const CardText = styled.Text`
   font-size: 18px;
   color: #474a51;
-  font-family: 'Mulish-Bold';
+  font-family: 'Mulish-Medium';
 `;

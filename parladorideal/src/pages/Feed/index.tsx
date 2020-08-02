@@ -1,10 +1,14 @@
-import React from 'react';
-import { Image, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 
+import { useAuth } from '../../hooks/auth';
+
 import logoImg from '../../assets/logoH.png';
 import ideaImg from '../../assets/idea.png';
+
+import api from '../../services/api';
 
 import {
   Container,
@@ -20,10 +24,39 @@ import {
   Nome,
   Data,
   CardText,
+  PostsList,
 } from './styles';
 
+export interface Post {
+  id: string;
+  text: string;
+  updated_at: string;
+  formattedDate: string;
+  user: {
+    name: string;
+  };
+}
+
 const Feed: React.FC = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+
   const navigation = useNavigation();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    async function loadPosts(): Promise<void> {
+      const response = await api.get('posts');
+
+      const postsFormatted = response.data.map((post: Post) => ({
+        ...post,
+        formattedDate: new Date(post.updated_at).toLocaleDateString('pt-br'),
+      }));
+
+      setPosts(postsFormatted);
+    }
+
+    loadPosts();
+  }, []);
 
   return (
     <Container>
@@ -35,50 +68,31 @@ const Feed: React.FC = () => {
         </GoToMyPosts>
       </Header>
 
-      <Image source={ideaImg} />
-
       <Title>Mural de ideias</Title>
 
-      <SubTitle>O que você está pensando?</SubTitle>
+      <Image source={ideaImg} />
+
+      <SubTitle>
+        {user.name},{'\n'}O que você está pensando?
+      </SubTitle>
 
       <GoToPost onPress={() => navigation.navigate('Post')}>
         <GoToPostText>Compartilhe!</GoToPostText>
       </GoToPost>
 
-      <ScrollView>
-        <CardPost>
-          <CardHeader>
-            <Nome>Patrícia</Nome>
-            <Data>23 jul 2020</Data>
-          </CardHeader>
-          <CardText>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </CardText>
-        </CardPost>
-
-        <CardPost>
-          <CardHeader>
-            <Nome>Patrícia</Nome>
-            <Data>23 jul 2020</Data>
-          </CardHeader>
-          <CardText>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </CardText>
-        </CardPost>
-
-        <CardPost>
-          <CardHeader>
-            <Nome>Patrícia</Nome>
-            <Data>23 jul 2020</Data>
-          </CardHeader>
-          <CardText>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </CardText>
-        </CardPost>
-      </ScrollView>
+      <PostsList
+        data={posts}
+        keyExtractor={post => post.id}
+        renderItem={({ item }) => (
+          <CardPost>
+            <CardHeader>
+              <Nome>{item.user.name}</Nome>
+              <Data>{item.formattedDate}</Data>
+            </CardHeader>
+            <CardText>{item.text}</CardText>
+          </CardPost>
+        )}
+      />
     </Container>
   );
 };
