@@ -44,19 +44,23 @@ const Feed: React.FC = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    async function loadPosts(): Promise<void> {
-      const response = await api.get('posts');
+    const unsubscribe = navigation.addListener('focus', () => {
+      async function loadPosts(): Promise<void> {
+        const response = await api.get('posts');
 
-      const postsFormatted = response.data.map((post: Post) => ({
-        ...post,
-        formattedDate: new Date(post.updated_at).toLocaleDateString('pt-br'),
-      }));
+        const postsFormatted = response.data.map((post: Post) => ({
+          ...post,
+          formattedDate: new Date(post.updated_at).toLocaleDateString('pt-br'),
+        }));
 
-      setPosts(postsFormatted);
-    }
+        setPosts(postsFormatted);
+      }
 
-    loadPosts();
-  }, []);
+      loadPosts();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <Container>

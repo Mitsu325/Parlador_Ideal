@@ -1,6 +1,10 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
-export const Container = styled.View`
+interface ContainerProps {
+  isErrored: boolean;
+}
+
+export const Container = styled.View<ContainerProps>`
   width: 100%;
   height: 280px;
   padding: 8px 16px;
@@ -9,6 +13,13 @@ export const Container = styled.View`
   border-radius: 8px;
   margin-bottom: 20px;
   justify-content: flex-start;
+
+  ${props =>
+    props.isErrored &&
+    css`
+      border-color: #e51a13;
+      border-width: 3px;
+    `}
 `;
 
 export const TextInput = styled.TextInput`

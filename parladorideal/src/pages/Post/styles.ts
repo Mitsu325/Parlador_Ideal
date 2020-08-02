@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { Form as FormUnform } from '@unform/mobile';
 
 export const Container = styled.View`
   flex: 1;
@@ -31,4 +32,8 @@ export const Title = styled.Text`
   color: #474a51;
   font-family: 'Rowdies-Regular';
   margin: 24px 0px;
+`;
+
+export const Form = styled(FormUnform)`
+  width: 100%;
 `;
