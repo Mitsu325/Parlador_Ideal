@@ -16,6 +16,9 @@ postsRouter.get('/', async (req, res) => {
   const posts = await postsRepository.find({
     select: ['id', 'text', 'updated_at'],
     relations: ['user'],
+    order: {
+      updated_at: 'DESC',
+    },
   });
 
   return res.json(posts);
