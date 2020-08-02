@@ -13,7 +13,7 @@ interface RouteParams {
 }
 
 const DeletePost: React.FC = () => {
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
 
   const route = useRoute();
   const { postId } = route.params as RouteParams;
@@ -32,6 +32,9 @@ const DeletePost: React.FC = () => {
 
       <Button primary={false} onPress={handleDeletePost}>
         Sim
+      </Button>
+      <Button primary={false} onPress={() => navigate('MyPosts')}>
+        Não
       </Button>
     </Container>
   );
