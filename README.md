@@ -34,8 +34,7 @@
 ## 🧐 Sobre
 
 Esta aplicação visa facilitar a troca de ideias e pensamentos do dia a dia de uma equipe, onde os colaboradores podem publicar posts de até 280 caracteres.
-O projeto se encontra em fase desenvolvimento faltando o consumo de API nas telas de listagem de posts, salvar, editar e excluir post.
-
+O projeto lista os posts da equipe e também permite o gerenciamento dos posts do usuário, como edição e exclusão.
 
 <a id="etapas"></a>
 ## 🚧 Etapas
